@@ -50,6 +50,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
         return pin
     }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let span  = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+        let region = MKCoordinateRegion(center: (view.annotation?.coordinate)!, span: span)
+    }
 
 }
 
