@@ -9,14 +9,17 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let herseyAnnotation = MKPointAnnotation()
     let address = "McDonald's"
     let geocoder = CLGeocoder()
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
+        
         let latitude: Double = 42.102332924
         let longitude: Double = -87.955667844
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -33,7 +36,20 @@ class ViewController: UIViewController {
                 self.mapView.addAnnotation(annotation)
             }
         }
+        
+        locationManager.requestWhenInUseAuthorization()
+        mapView.showsUserLocation = true
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var pin = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        pin.image = UIImage(named: "Arnold")
+        pin.canShowCallout = true
+        let button = UIButton(type: .detailDisclosure)
+        pin.rightCalloutAccessoryView = button
+        return pin
+    }
+    
 
 }
 
